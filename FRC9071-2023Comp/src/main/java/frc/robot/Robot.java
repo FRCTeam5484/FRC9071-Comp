@@ -59,7 +59,6 @@ public class Robot extends TimedRobot {
     ConfigureDrive();
     ConfigureArm();
     ConfigureIntake();
-    ConfigureSmartDashboardItems();
 
     m_Drivetrain = new DifferentialDrive(driveLeftFrontSpark, driveRightFrontSpark);
   }
@@ -190,13 +189,6 @@ public class Robot extends TimedRobot {
     intake.setInverted(false);
   }
 
-  private void ConfigureSmartDashboardItems() {
-    // Add items to SmartDashboard so it can be changed on the fly
-    SmartDashboard.putNumber("Drive Power Factor (0.0 - 1.0)", drivePowerFactor);
-    SmartDashboard.putNumber("Arm Power Factor (0.0 - 1.0)", armPower);
-    SmartDashboard.putNumber("Intake Power Factor (0.0 - 1.0)", intakePower);
-  }
-
   // ************************************************************
   // Autonomous Methods
   // ************************************************************
@@ -236,9 +228,7 @@ public class Robot extends TimedRobot {
   // Drive Methods
   // ************************************************************
   private void drive(double leftPower, double rightPower){
-    // Get power factor and set it to drive train
-    double factor = SmartDashboard.getNumber("Drive Power Factor (0.0 - 1.0)", drivePowerFactor);
-    m_Drivetrain.tankDrive(leftPower*factor, rightPower*factor);
+    m_Drivetrain.tankDrive(leftPower*drivePowerFactor, rightPower*drivePowerFactor);
   }
 
   private void driveStop(){
@@ -249,15 +239,11 @@ public class Robot extends TimedRobot {
   // Arm Methods
   // ************************************************************
   private void armLower(){
-    // Get power and set it to arm
-    double power = SmartDashboard.getNumber("Arm Power Factor (0.0 - 1.0)", armPower);
-    arm.set(power);
+    arm.set(armPower);
   }
 
   private void armRaise(){
-    // Get power and set it to arm
-    double power = SmartDashboard.getNumber("Arm Power Factor (0.0 - 1.0)", armPower);
-    arm.set(-power);
+    arm.set(-armPower);
   }
 
   private void armStop(){
@@ -269,15 +255,11 @@ public class Robot extends TimedRobot {
   // Intake Methods
   // ************************************************************
   private void intakeForward(){
-    // Get power factor and set it to intake
-    double power = SmartDashboard.getNumber("Intake Power Factor (0.0 - 1.0)", intakePower);
-    intake.set(power);
+    intake.set(armPower);
   }
 
   private void intakeReverse(){
-    // Get power factor and set it to intake
-    double power = SmartDashboard.getNumber("Intake Power Factor (0.0 - 1.0)", intakePower);
-    intake.set(-power);
+    intake.set(-armPower);
   }
 
   private void intakeStop(){
