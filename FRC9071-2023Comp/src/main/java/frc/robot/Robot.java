@@ -64,7 +64,9 @@ public class Robot extends TimedRobot {
   }
   
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    SmartDashboard.putNumber("Arm Encoder", armEncoder.getPosition());
+  }
 
   @Override
   public void autonomousInit() {
@@ -113,7 +115,7 @@ public class Robot extends TimedRobot {
     if(OpController.getSquareButton()){
       intakeForward();
     }
-    else if (OpController.getSquareButton()){
+    else if (OpController.getTriangleButton()){
       intakeReverse();
     }
     else{
